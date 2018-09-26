@@ -1,0 +1,17 @@
+name: confbot
+version: 0.1.0
+
+authors:
+  - Sebastian Otaegui <feniix@gmail.com>
+
+targets:
+  confbot:
+    main: src/confbot.cr
+
+crystal: 0.26.0
+
+license: MIT
+
+dependencies:
+  crest:
+    github: mamantoha/crest

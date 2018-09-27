@@ -1,8 +1,9 @@
 FROM ubuntu:bionic as builder
 
-      #apt-get -y install curl wget gnupg libz-dev xxxlibssl1.0-dev && \
+ENV DEBIAN_FRONTEND noninteractive
+
 RUN apt-get update && \
-      apt-get -y install curl wget gnupg pkg-config libz-dev && \
+      apt-get -y -V install curl wget gnupg pkg-config libz-dev && \
       curl -sL "https://keybase.io/crystal/pgp_keys.asc" | apt-key add - && \
       echo "deb https://dist.crystal-lang.org/apt crystal main" | tee /etc/apt/sources.list.d/crystal.list && \
       apt-get update && \
@@ -16,7 +17,8 @@ RUN shards build
 
 FROM ubuntu:bionic
 RUN apt-get update && \
-      apt-get -y install libssl1.1 libevent-2.1
+      apt-get -y --no-install-recommends -V install libssl1.1 libevent-2.1 && \
+      rm -r /var/lib/apt/lists/*
 
 COPY --from=builder /app/bin/confbot .
 
